@@ -13,20 +13,45 @@ let links = document.links;
 let btnK = document.getElementsByName("btnK")[0];
 let keywords = ["Хоумстак", "homestuck", "mspaintadventures"];
 let keyword = keywords[getRandom(0, keywords.length)];
+let googleInput = document.getElementsByName("q")[0];
 
 if (btnK != undefined) {
-    document.getElementsByName("q")[0].value = keyword;
-btnK.click();}
-else {
+	let i = 0;
+	let timerId = setInterval(() => {
+		googleInput.value += keyword[i];
+		i++;
+		if (i == keyword.length) {
+			clearInterval(timerId);
+			btnK.click();
+		}
+	}, 500);
 
-for (let i = 0; i < links.length; i++) {
+} else {
+	let nextGooglePage = true;
+	for (let i = 0; i < links.length; i++) {
     if (links[i].href.includes("homestuck.com")) {
-        let link = links[i];
-        console.log("mmm" + link);
-        link.click();
-        break;
-    }
+			let link = links[i];
+			nextGooglePage = false;
+			console.log("mmmm " + link);
+			setTimeout(() => {
+				link.click();
+			}, getRandom(3500, 5500));
+			break;
+		}
+	}
+    	if (document.querySelector(".YyVfkd").innerText == "5") {
+		nextGooglePage = false;
+		location.href = "https://www.google.com/";
+	}
+	if (nextGooglePage) {
+		setTimeout(() => {
+			pnnext.click();
+		}, getRandom(5000, 7000));
+	}
 }
+
+function getRandom(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
 }
 
 
